@@ -9,7 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.igi.entities.Country;
 import com.igi.entities.User;
+import com.igi.repositories.CountryRepository;
 import com.igi.repositories.UserRepository;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -26,6 +28,9 @@ public class Angular2Ee01CrudApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private CountryRepository countryRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Angular2Ee01CrudApplication.class, args);
@@ -38,6 +43,13 @@ public class Angular2Ee01CrudApplication implements CommandLineRunner {
 		userRepository.save(new User(11L, "salah", "atwa", 24));
 		userRepository.save(new User(21L, "salah2", "atwa2", 24));
 		userRepository.save(new User(31L, "salah3", "atwa2", 25));
+		
+		
+		countryRepository.save(new Country(1L, "Egypt", "+024"));
+		countryRepository.save(new Country(2L, "Egypt3", "+024"));
+		countryRepository.save(new Country(3L, "Egypt2", "+024"));
+		countryRepository.save(new Country(4L, "Egypt1", "+024"));
+		
 	}
 }
 
