@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: Angular2EE01_Crud
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: salah
+Implementation-Vendor-Id: com.example
+Build-Jdk: 1.8.0_121
+Implementation-URL: http://projects.spring.io/spring-boot/Angular2EE01
+ _Crud/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
