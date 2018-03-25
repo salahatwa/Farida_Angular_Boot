@@ -3,14 +3,17 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CountryService {
-  private baseUrl:String="http://localhost:8080";
+  private baseUrl: String = 'http://localhost:8080';
 
-  constructor(private _http:HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
 
-  getCountries(page:Number)
-  {
-    return this._http.get(this.baseUrl+"/api/countries?page="+page);
+  getCountries(page: Number) {
+    return this._http.get(this.baseUrl + '/api/countries?page=' + page);
+  }
+
+  deleteCountry(id: Number) {
+    return this._http.delete(this.baseUrl + '/api/country/' + id);
   }
 
 }

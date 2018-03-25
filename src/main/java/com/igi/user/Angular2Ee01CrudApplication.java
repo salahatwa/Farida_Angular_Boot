@@ -3,6 +3,7 @@ package com.igi.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = "com.igi.controller")
 @EnableJpaRepositories("com.igi.repositories")
 @EnableSwagger2
+@EnableAutoConfiguration
 @Import(WebConfiguration.class)
 public class Angular2Ee01CrudApplication implements CommandLineRunner {
 	

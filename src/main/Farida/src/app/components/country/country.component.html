@@ -1,21 +1,32 @@
 <div class="container">
 
- <table class="table table-stripped">
-   <th>Country Name</th>
-   <th>Country Code</th>
-   <tbody>
-  <tr *ngFor="let country of countries">
-    <td>{{country.countryName}}</td>
-    <td>{{country.countryCode}}</td>
-  </tr>
-   </tbody>
- </table>
- <hr>
- <ul class="nav nav-pills">
+  <table class="table table-stripped">
+    <th>Country Name</th>
+    <th>Country Code</th>
+    <th>Operation</th>
+    <tbody>
+      <tr *ngFor="let country of countries">
+        <td>{{country.countryName}}</td>
+        <td>{{country.countryCode}}</td>
+        <td>
+          <app-confirm-delete [country]="country" (deleteCountry)="deleteCountry($event)"></app-confirm-delete>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+
+  <!--
+  <ul class="nav nav-pills">
     <li class="nav-item" *ngFor="let p of pages;let i=index">
-      <a class="nav-link" href="#" (click)="setPage(i,$event)">{{i}}</a>
+      <a class="nav-link" href="#" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}">{{i}}</a>
     </li>
   </ul>
+-->
+
+  <!-- pages is not initiated when Angular2 load the template. And we want to wait until it's ready to access its members. -->
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="pages?.length * 10" [(page)]="page" (click)="setPage(page,$event)"
+    aria-label="Default pagination"></ngb-pagination>
+
 
 </div>
-
