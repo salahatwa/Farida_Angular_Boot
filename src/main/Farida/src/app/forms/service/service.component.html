@@ -1,0 +1,124 @@
+<div class="container">
+  <form (ngSubmit)="processForm()">
+    <div class="form-group">
+      <label for="serviceID">Service ID</label>
+      <input type="text" class="form-control" id="serviceID" name="serviceID" [(ngModel)]="serviceConfigMap.id" required />
+    </div>
+
+    <div class="form-group">
+      <label for="serviceName">Service Name</label>
+      <input type="text" class="form-control" id="serviceName" name="serviceName" [(ngModel)]="serviceConfigMap.name" />
+    </div>
+
+
+    <div class="form-group">
+      <label for="serviceType">Select Service Type (select one):</label>
+      <select class="form-control" id="serviceType" name="segmentationType" [(ngModel)]="businessServiceConfig?.segmentationType.name">
+        <option *ngFor="let serviceType of servicesTypes" [ngValue]="businessServiceConfig?.segmentationType.name">{{serviceType.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+
+    <button class="btn btn-sm btn-outline-primary" >Add Step</button>
+    
+  </div>
+    
+    <ng-template #itemTemplate let-item="item" let-index="index">
+      <table class="table">
+        <tbody>
+          <tr >
+            <td>{{index+1}}</td>
+            <td>{{item.value.description}}</td>
+            <td>{{item.value.type}}</td>
+            <td>{{item.value.service.serviceStackType}}</td>
+            <td><button class="btn btn-sm btn-outline-danger" (click)="deleteStep(item.value.id)">Delete</button></td>
+            <td><button class="btn btn-sm btn-outline-primary" (click)="deleteStep(item.value.id)">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+
+    <div *ngIf="steps && steps.length > 0">
+
+      <div class="row">
+        <div class="container">
+          <bs-sortable [itemTemplate]="itemTemplate" name="currentSteps" [(ngModel)]="steps"   itemClass="list-group-item"
+            itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper"></bs-sortable>
+         <!-- <pre class="code-preview">model: {{ steps | json }}</pre> -->
+        </div>
+        <!--
+        <div class="col-xs-6 col-6 col-md-5 col-lg-3">
+          <bs-sortable name="allSteps" [(ngModel)]="steps" fieldName="description" itemClass="sortable-item"
+            itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper"></bs-sortable>
+          <pre class="code-preview">model: {{ steps | json }}</pre>
+        </div>
+      -->
+      </div>
+
+    </div>
+  
+    <!--
+    <div>
+      <ul *ngFor="let step of steps">
+        <li>{{step.description}}</li>
+      </ul>
+
+    </div>
+  -->
+
+
+    <!--
+  <div class="row">
+    <div class="col-xs-6 col-6 col-md-5 col-lg-3">
+      <bs-sortable name="t1"
+        [(ngModel)]="itemObjectsLeft"
+        fieldName="name"
+        itemClass="sortable-item"
+        itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here"
+        placeholderClass="sortable-item"
+        wrapperClass="sortable-wrapper"
+      ></bs-sortable>
+      <pre class="code-preview">{{ itemObjectsLeft | json }}</pre>
+    </div>
+    <div class="col-xs-6 col-6 col-md-5 col-lg-3">
+      <bs-sortable name="t2"
+        [(ngModel)]="itemObjectsRight"
+        fieldName="name"
+        itemClass="sortable-item"
+        itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here"
+        placeholderClass="sortable-item"
+        wrapperClass="sortable-wrapper"
+      ></bs-sortable>
+      <pre class="code-preview">{{ itemObjectsRight | json }}</pre>
+    </div>
+  </div>
+-->
+
+
+
+
+
+    <div *ngIf="operation ==='UPDATE';then updateButton else createButton"></div>
+
+
+    <div>
+      <h2>Model:</h2>
+      {{ currentService }}
+    </div>
+
+  </form>
+
+  <ng-template #updateButton>
+    <input type="submit" class="btn btn-success" value="Update">
+  </ng-template>
+
+  <ng-template #createButton>
+    <input type="submit" class="btn btn-success" value="Create">
+  </ng-template>
+
+  <!-- <button class="btn btn-sm btn-outline-danger" (click)="openDailog(deleteService)">Delete</button> -->
+
+</div>

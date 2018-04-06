@@ -1,0 +1,17 @@
+<ng-template #deleteService let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Delete Service</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeDailog()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are you want to delete This Service {{service.name}}?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="delete(service)">Yes</button>
+      <button type="button" class="btn btn-outline-dark" (click)="closeDailog()">No</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-sm btn-outline-danger" (click)="openDailog(deleteService)">Delete</button>

@@ -25,14 +25,17 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.4",
-    "bootstrap": "^4.0.0-beta.3",
+    "bootstrap": "^4.0.0",
     "copyfiles": "^1.2.0",
     "core-js": "^2.4.1",
     "mkdirp": "^0.5.1",
     "moment": "^2.18.1",
     "ng2-opd-popup": "^1.1.21",
+    "ng2-search-filter": "^0.4.7",
+    "ngx-bootstrap": "^2.0.3",
     "rimraf": "^2.6.1",
     "rxjs": "^5.5.6",
+    "uglify-es": "^3.2.2",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
