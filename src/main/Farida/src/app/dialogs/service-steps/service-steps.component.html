@@ -1,0 +1,90 @@
+<ng-template #serviceSteps let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Service Steps for {{service.id}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="closeDailog()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+
+    <form >
+      <div class="form-group row">
+        <div class="col-xs-2">
+
+          <input class="form-control" placeholder="description" id="ex1" type="text" name="description" [(ngModel)]='businessServiceStep.description'>
+        </div>
+        <div class="col-xs-3">
+
+          <select class="form-control custom-select mr-sm-2" id="serviceType" name="serviceType" (change)="onChange($event.target.value)"
+            [(ngModel)]='businessServiceStep.type'>
+
+            <option value="0" [ngValue]="0">Validation</option>
+            <option value="1" [ngValue]="1" selected>Service</option>
+            <option value="2" [ngValue]="2">Transaction</option>
+          </select>
+
+        </div>
+
+
+        <div *ngIf="selectedValue=='1'" class="col-xs-2">
+
+          <select class="form-control custom-select mr-sm-2" id="serviceType" name="selectedService" [(ngModel)]='businessServiceStep.service'>
+            <option *ngFor="let service of services" [ngValue]="service">{{service.name}}</option>
+          </select>
+
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-2">
+          <button class="btn btn-sm btn-outline-primary" (click)="addStep()">Add Step</button>
+        </div>
+      </div>
+    </form>
+
+
+
+
+    <ng-template #itemTemplate let-item="item" let-index="index">
+      <table class="table table-bordered table-hover table-sm">
+        <tbody>
+          <h6>
+            <tr>
+              <td>{{index+1}}</td>
+              <td>{{item.value?.description}}</td>
+              <td>{{item.value?.type}}</td>
+              <td>{{item.value.service?.serviceStackType}}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteStep(item.value.id)">Delete</button>
+                <button class="btn btn-sm btn-outline-primary" (click)="deleteStep(item.value.id)">Edit</button>
+              </td>
+              {{ updateStepOrder( item.value,index+1 )}}
+            </tr>
+          </h6>
+        </tbody>
+      </table>
+    </ng-template>
+
+    <div *ngIf="steps && steps.length > 0">
+
+      <div class="row">
+        <div class="container">
+          <bs-sortable [itemTemplate]="itemTemplate" name="currentSteps" [(ngModel)]="steps" (onChange)="updateSteps(steps)" itemClass="list-group-item"
+            itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper"></bs-sortable>
+          <!-- <pre class="code-preview">model: {{ steps | json }}</pre> -->
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+
+</ng-template>
+
+<button type="button" class="btn btn-info" (click)="openDailog(serviceSteps)">Steps</button>

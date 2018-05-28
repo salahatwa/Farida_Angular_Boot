@@ -13,19 +13,17 @@ import javax.persistence.OneToOne;
 import com.igi.utils.ServiceLevel;
 import com.igi.utils.ServiceStack;
 
-
 @Entity(name = "Service")
-public class Service implements  Serializable {
+public class Service implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name = "Id")
 	private Long id;
-	
 
 	@OneToOne
 	@JoinColumn(name = "category_id", nullable = true)
@@ -155,10 +153,14 @@ public class Service implements  Serializable {
 
 	@Override
 	public String toString() {
-		return "Service [id=" + id + ", serviceStackId=" + serviceStackId + ", serviceStackType=" + serviceStackType
-				+ ", name=" + name + ", description=" + description + ", ownerService=" + ownerService + ", isMigrated="
-				+ isMigrated + ", category=" + category + ", level=" + level + ", serviceReversal=" + serviceReversal
-				+ "]";
+		
+		Integer catId = (this.category != null && !this.category.equals(null))
+				? category.getId()
+				: null;
+				
+		return "insert into Service (Id,Service_Stack_Id,Service_Stack_Type,Name,description,Owner_Service,is_migrated,category_id,service_level,Service_Reversal_Id)  values("
+				+ id + ", " + serviceStackId + "," + serviceStackType + "," + name + "," + description + ", "
+				+ ownerService + "," + isMigrated + ", " + catId + "," + level + ", " + serviceReversal + ")";
 	}
 
 }

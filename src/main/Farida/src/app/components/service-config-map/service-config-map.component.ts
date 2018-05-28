@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceConfigMapService } from '../../shared/service-config-map.service';
 import { ServiceConfigMap } from '../../models/service-config-map';
+import { QueryModel } from '../../models/query-model';
 import { Operation } from '../../utils/operation.enum';
 
 
@@ -16,7 +17,9 @@ export class ServiceConfigMapComponent implements OnInit {
   pages: Array<Number>;
 
   numOfServices: Number;
-  numOfPages: Number;
+  numOfPages: number;
+
+  queryModel: QueryModel;
 
 
   constructor(private _servicConfigMapService: ServiceConfigMapService) { }
@@ -56,6 +59,16 @@ export class ServiceConfigMapComponent implements OnInit {
   deleteService(service) {
     this._servicConfigMapService.deleteService(service.id).subscribe((data) => {
       this.services.splice(this.services.indexOf(service), 1);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+
+  getQueries(service) {
+    this._servicConfigMapService.getQueries(service.id).subscribe((data) => {
+      console.log(data);
+      this.queryModel = data;
     }, (error) => {
       console.log(error);
     });

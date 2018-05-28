@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-boo
 import { ServiceConfigMap } from '../../models/service-config-map';
 import { Operation } from '../../utils/operation.enum';
 import { ServiceConfigMapService } from '../../shared/service-config-map.service';
+import { BusinessServiceConfig } from '../../models/business-service-config';
 
 @Component({
   selector: 'app-service-update',

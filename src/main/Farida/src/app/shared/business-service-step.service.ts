@@ -29,7 +29,8 @@ export class BusinessServiceStepService {
   }
 
   deleteStep(id: Number) {
-    return this._http.delete(this.baseUrl + '/step/' + id);
+    return this._http.delete(this.baseUrl + '/step/' + id).toPromise()
+      .catch(this.handleError);
   }
 
   updateStep(businessServiceStep: BusinessServiceStep) {
@@ -41,8 +42,14 @@ export class BusinessServiceStepService {
 
   createStep(businessServiceStep: BusinessServiceStep) {
     return this._http.post(this.baseUrl + '/step', JSON.stringify(businessServiceStep), this.options)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
+    .map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
+
+
+  private handleErrorPO(error: any): Promise<any> {
+    console.error('Some error occured', error);
+    return Promise.reject(error.message || error);
   }
 
 

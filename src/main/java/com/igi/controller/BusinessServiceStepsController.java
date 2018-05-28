@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,24 +35,31 @@ public class BusinessServiceStepsController {
 	}
 
 	@GetMapping("/step/{id}")
-	public  Optional<BusinessServiceStep> getStepByID(@PathVariable long id) {
+	public Optional<BusinessServiceStep> getStepByID(@PathVariable long id) {
 		System.err.println("::::::" + id);
 		return businessServiceStepRepository.findById(id);
 	}
 
 	@DeleteMapping("/step/{id}")
-	public void deleteStepByID(@PathVariable long id) {
-		businessServiceStepRepository.deleteById(id);
+	public ResponseEntity<?> deleteStepByID(@PathVariable long id) {
+		try {
+			businessServiceStepRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		} catch (Exception ex) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PutMapping(value = "/step")
-	public void updateStep(@RequestBody BusinessServiceStep serviceConfigMap) {
-		businessServiceStepRepository.save(serviceConfigMap);
+	public void updateStep(@RequestBody BusinessServiceStep step) {
+		businessServiceStepRepository.save(step);
 	}
 
 	@PostMapping("/step")
-	public void createService(@RequestBody BusinessServiceStep serviceConfigMap) {
-		businessServiceStepRepository.save(serviceConfigMap);
+	public BusinessServiceStep createStep(@RequestBody BusinessServiceStep step) {
+
+		System.err.println(step.toString());
+		return businessServiceStepRepository.save(step);
 	}
 
 }

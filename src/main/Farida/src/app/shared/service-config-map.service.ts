@@ -29,6 +29,12 @@ export class ServiceConfigMapService {
       .catch(this.handleError);
   }
 
+
+  getQueries(id: Number) {
+    return this._http.get(this.baseUrl + '/serviceConfigMap/listQueuries/' + id).map((response: Response) => response.json())
+    .catch(this.handleError);
+  }
+
   deleteService(id: Number) {
     return this._http.delete(this.baseUrl + '/serviceConfigMap/' + id);
   }

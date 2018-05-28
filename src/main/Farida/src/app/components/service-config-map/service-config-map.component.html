@@ -2,7 +2,7 @@
 <nav role="navigation" class="header-navbar navbar-expand-sm navbar navbar-with-menu fixed-top navbar-transparent navbar-shadow navbar-border">
   <span class="badge badge-secondary badge-pill">{{numOfServices}}</span>
 
-  <input class="form-control" type="text" name="search" [(ngModel)]="filter">
+  <input class="form-control" type="text" name="search" >
 </nav>
 <!-- BEGIN Navigation-->
 <div class="main-menu menu-transparent menu-fixed menu-shadow">
@@ -32,13 +32,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let service of services | filter:filter ; let i = index ">
+          <tr *ngFor="let service of services ; let i = index ">
             <td>{{service.id}}</td>
             <td>{{service.name}}</td>
             <td>{{service.category}}</td>
             <td>{{service.serviceMode}}</td>
 
             <td>
+              <ng-template #popTemplate>
+                  <span class="glyphicon glyphicon glyphicon-search"></span>
+                <button type="button" class="btn btn-primary btn-xs" ngxClipboard [cbContent]="queryModel?.queryBody">Copy</button>
+                <textarea name="content" ROWS=4 COLS=30>
+                        {{ queryModel?.queryBody }}
+                        </textarea>
+              </ng-template>
+              <button type="button" class="btn btn-info" (click)="getQueries(service)" [popover]="popTemplate" popoverTitle="Service SQL Query">
+                Query
+              </button>
+              <app-service-steps [service]="service"></app-service-steps>
               <app-service-update [service]="service" [operation]="getOperation('UPDATE')"></app-service-update>
               <app-service-delete [service]="service" (deleteService)="deleteService($event)"></app-service-delete>
             </td>
@@ -48,15 +59,15 @@
       <hr>
 
       <!--
-            <ul class="nav nav-pills">
-              <li class="nav-item" *ngFor="let p of pages;let i=index">
-                <a class="nav-link" href="#" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}">{{i}}</a>
-              </li>
-            </ul>
-          -->
+              <ul class="nav nav-pills">
+                <li class="nav-item" *ngFor="let p of pages;let i=index">
+                  <a class="nav-link" href="#" (click)="setPage(i,$event)" [ngClass]="{'active':i==page}">{{i}}</a>
+                </li>
+              </ul>
+            -->
 
       <!-- pages is not initiated when Angular2 load the template. And we want to wait until it's ready to access its members. -->
-      <ngb-pagination class="d-flex justify-content-center" [collectionSize]="numOfPages*10" [(page)]="page" (click)="setPage(page,$event)"
+      <ngb-pagination class="d-flex justify-content-center" [collectionSize]="numOfPages * 10" [(page)]="page" (click)="setPage(page,$event)"
         aria-label="Default pagination" [maxSize]="5" [rotate]="true" [ellipses]="true" [boundaryLinks]="true"></ngb-pagination>
 
 

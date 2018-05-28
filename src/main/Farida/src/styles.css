@@ -6,6 +6,8 @@ body {
     background: #d53369;
     background: -webkit-linear-gradient(to left, #cbad6d, #d53369);
     background: linear-gradient(to left, #cbad6d, #d53369); 
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 200;
     color: #333;
   }
   
@@ -92,7 +94,7 @@ body {
   }
   
   .todo-content .todo-title {
-    width: calc(100% - 160px);
+    width: calc(100% - 100px);
     margin-left: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -158,3 +160,14 @@ body {
   li.completed i {
     color: #757575;
   }
+
+
+.row-no-gutter {
+	margin-right: 0;
+	margin-left: 0;
+}
+
+.row-no-gutter [class*="col-"] {
+	padding-right: 0;
+	padding-left: 0;
+}

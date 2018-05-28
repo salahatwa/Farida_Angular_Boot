@@ -1,28 +1,28 @@
 <ng-template #updateService let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">Edit</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeDailog()">
-      <span aria-hidden="true">&times;</span>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeDailog()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-service [service]="service" [operation]="operation" (updateModel)="updateModel($event)"> </app-service>
+  
+    </div>
+  
+  </ng-template>
+  
+  <div *ngIf="operation.startsWith('UPDATE') ;then updateButton else createButton "></div>
+  
+  
+  <ng-template #updateButton>
+    <button class="btn btn-sm btn-outline-primary " (click)="openDailog(updateService) ">
+      update
     </button>
-  </div>
-  <div class="modal-body">
-    <app-service [service]="service" [operation]="operation" (updateModel)="updateModel($event)"> </app-service>
-
-  </div>
-
-</ng-template>
-
-<div *ngIf="operation === 'UPDATE' ;then updateButton else createButton "></div>
-
-
-<ng-template #updateButton>
-  <button class="btn btn-sm btn-outline-primary " (click)="openDailog(updateService) ">
-    update
-  </button>
-</ng-template>
-
-<ng-template #createButton>
-  <button class="btn btn-sm btn-outline-primary " (click)="openDailog(updateService) ">
-    create
-  </button>
-</ng-template>
+  </ng-template>
+  
+  <ng-template #createButton>
+    <button class="btn btn-sm btn-outline-primary " (click)="openDailog(updateService) ">
+      create
+    </button>
+  </ng-template>

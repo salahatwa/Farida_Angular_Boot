@@ -6,15 +6,19 @@ import { BusinessStepType } from '../utils/business-step-type.enum';
 export class BusinessServiceStep {
 
     id: Number;
-    businessServiceConfig: BusinessServiceConfig;
+    businessServiceConfig: BusinessServiceConfig = new BusinessServiceConfig();
     description: String;
     isMigrated: boolean;
     stepOrder: Number;
 
-    service: Service;
+    service: Service = new Service();
     type: BusinessStepType;
 
     constructor(values: Object = {}) {
         Object.assign(this, values);
+    }
+
+    setStepOrder(order: Number) {
+        this.stepOrder = order;
     }
 }

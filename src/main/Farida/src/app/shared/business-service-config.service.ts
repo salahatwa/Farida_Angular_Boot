@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
 import { ServiceConfigMap } from '../models/service-config-map';
+import { BusinessServiceConfig } from '../models/business-service-config';
 
 
 @Injectable()
@@ -26,7 +27,7 @@ export class BusinessServiceConfigService {
       .catch(this.handleError);
   }
 
-  createBussinessServiceConfig(businessConfig: BusinessServiceConfigService) {
+  createBussinessServiceConfig(businessConfig: BusinessServiceConfig) {
     return this._http.post(this.baseUrl + '/config', JSON.stringify(businessConfig), this.options)
       .map((response: Response) => response.json())
       .catch(this.handleError);

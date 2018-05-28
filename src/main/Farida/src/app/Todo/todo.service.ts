@@ -30,7 +30,7 @@ export class TodoService {
       .catch(this.handleError);
   }
 
-  deleteTodo(id: string): Promise<any> {
+  deleteTodo(id: Number): Promise<any> {
     return this.http.delete(this.baseUrl + '/api/service/' + id)
       .toPromise()
       .catch(this.handleError);

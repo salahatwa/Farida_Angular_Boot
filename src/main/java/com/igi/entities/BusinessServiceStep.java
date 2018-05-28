@@ -2,6 +2,7 @@ package com.igi.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -10,29 +11,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.igi.utils.BusinessStepType;
 
-
 @Entity
-@Table(name="Business_Service_Step")
-public class BusinessServiceStep implements  Serializable, Comparable<BusinessServiceStep> {
+@Table(name = "Business_Service_Step")
+public class BusinessServiceStep implements Serializable, Comparable<BusinessServiceStep> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@org.hibernate.annotations.GenericGenerator(name = "incrementGenerator", strategy = "org.hibernate.id.IncrementGenerator")
+	@GeneratedValue(generator = "incrementGenerator")
 	@Column(name = "Id")
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "BUSINESS_SERVICE_CONFIG_ID")
 	private BusinessServiceConfig businessServiceConfig;
@@ -50,9 +49,9 @@ public class BusinessServiceStep implements  Serializable, Comparable<BusinessSe
 	@Column(name = "Step_Order")
 	private int stepOrder;
 
-//	@OneToOne
-//	@JoinColumn(name = "Transaction_Def", nullable = true)
-//	private TransactionDefinitionSummary transaction;
+	// @OneToOne
+	// @JoinColumn(name = "Transaction_Def", nullable = true)
+	// private TransactionDefinitionSummary transaction;
 
 	@Enumerated
 	private BusinessStepType type;
@@ -61,7 +60,7 @@ public class BusinessServiceStep implements  Serializable, Comparable<BusinessSe
 		return this.stepOrder > o.stepOrder ? 1 : -1;
 	}
 
-	 @JsonBackReference
+	@JsonBackReference
 	public BusinessServiceConfig getBusinessServiceConfig() {
 		return businessServiceConfig;
 	}
@@ -82,14 +81,12 @@ public class BusinessServiceStep implements  Serializable, Comparable<BusinessSe
 		return stepOrder;
 	}
 
-	/*public TransactionDefinitionSummary getTransaction() {
-		return transaction;
-	}
-	
-	public void setTransaction(TransactionDefinitionSummary transaction) {
-		this.transaction = transaction;
-	}
-*/
+	/*
+	 * public TransactionDefinitionSummary getTransaction() { return transaction; }
+	 * 
+	 * public void setTransaction(TransactionDefinitionSummary transaction) {
+	 * this.transaction = transaction; }
+	 */
 	public BusinessStepType getType() {
 		return type;
 	}
@@ -122,15 +119,14 @@ public class BusinessServiceStep implements  Serializable, Comparable<BusinessSe
 		this.stepOrder = stepOrder;
 	}
 
-	
-
 	public void setType(BusinessStepType type) {
 		this.type = type;
 	}
 
 	@Override
 	public String toString() {
-		return "BusinessServiceStep [id=" + id + ", stepOrder=" + stepOrder + ", description=" + description
-				+ ", service=" + service + ", type=" + type + ", isMigrated=" + isMigrated + "]";
+		return "insert into Business_Service_Step(Id,BUSINESS_SERVICE_CONFIG_ID,Description,is_migrated,Service,Step_Order,type) values( "
+				+ id + ", " + businessServiceConfig.getId() + ", " + description + ", " + isMigrated + ", "
+				+ service.getId() + ", " + stepOrder + ", " + type.getBusinessStepTypeString() + ")";
 	}
 }

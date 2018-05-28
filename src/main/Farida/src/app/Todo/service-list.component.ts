@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TodoService } from './todo.service';
 import { NgForm } from '@angular/forms';
 import { Service } from '../models/service';
+import { ServiceStack } from '../utils/service-stack.enum';
 
 @Component({
   selector: 'app-todo-list',
@@ -14,9 +15,9 @@ export class ServiceListComponent implements OnInit {
   editing: Boolean = false;
   editingService: Service = new Service();
 
-  constructor(
-    private todoService: TodoService,
-  ) { }
+  type: ServiceStack;
+
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
     this.getTodos();
@@ -36,10 +37,10 @@ export class ServiceListComponent implements OnInit {
       });
   }
 
-  deleteTodo(id: string): void {
+  deleteTodo(id: Number): void {
     this.todoService.deleteTodo(id)
       .then(() => {
-        this.services = this.services.filter(todo => todo.id !==  id);
+        this.services = this.services.filter(todo => todo.id !== id);
       });
   }
 

@@ -1,3 +1,3 @@
 export enum ServiceStack {
-    EXTERNAL, INTERNAL, VALIDATION
+    EXTERNAL = 0, INTERNAL = 1, VALIDATION = 2
 }

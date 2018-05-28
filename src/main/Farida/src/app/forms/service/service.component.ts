@@ -29,33 +29,22 @@ export class ServiceComponent implements OnInit {
   servicesTypes: Array<OfferedServiceType>;
 
 
-  itemObjectsLeft: any[] = [
-    { id: 1, name: 'Windstorm' },
-    { id: 2, name: 'Bombasto' },
-    { id: 3, name: 'Magneta' }
-  ];
-
-  itemObjectsRight: any[] = [
-    { id: 4, name: 'Tornado' },
-    { id: 5, name: 'Mr. O' },
-    { id: 6, name: 'Tomato' }
-  ];
-
   constructor(private _serviceConfigMapService: ServiceConfigMapService, private _serviceConfig: BusinessServiceConfigService,
     private _serviceType: OfferedServiceTypeService) {
     this.serviceConfigMap = new ServiceConfigMap();
   }
 
   ngOnInit() {
+
+    this.getServiceTypes();
     if (this.operation === 'CREATE') {
       this.serviceConfigMap = new ServiceConfigMap();
       this.businessServiceConfig = new BusinessServiceConfig();
     } else if (this.operation === 'UPDATE') {
       this.serviceConfigMap = this.service;
-
+      this.getBusinessServiceConfig();
     }
-    this.getServiceTypes();
-    this.getBusinessServiceConfig();
+
   }
 
   getBusinessServiceConfig() {
@@ -84,7 +73,6 @@ export class ServiceComponent implements OnInit {
 
   processForm() {
 
-    console.log(this.serviceConfigMap);
 
     if (this.operation === 'UPDATE') {
       this._serviceConfigMapService.updateService(this.serviceConfigMap).subscribe(
@@ -109,12 +97,5 @@ export class ServiceComponent implements OnInit {
     console.log('Finished....................');
   }
 
-  deleteStep(id: Number) {
-    console.log('KKKKKKKKKKKKKKKKKKKKKKKKKKKK:' + id);
-  }
-
-  addStep() {
-    const step = new BusinessServiceStep();
-  }
   get currentService() { return JSON.stringify(this.serviceConfigMap); }
 }

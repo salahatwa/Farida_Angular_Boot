@@ -19,38 +19,40 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.igi.utils.BusinessServiceCategory;
 
-
 @Entity
 @Table(name = "Business_Service_Config")
-public class BusinessServiceConfig implements  Serializable {
+public class BusinessServiceConfig implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @org.hibernate.annotations.GenericGenerator(name = "incrementGenerator",
+	// strategy = "org.hibernate.id.IncrementGenerator")
+	// @GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MESSAGE_GEN")
+	@SequenceGenerator(name = "MESSAGE_GEN", sequenceName = "MESSAGE_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name = "Id")
 	private Long id;
 
 	@Column(name = "banking_agent", nullable = false)
 	private boolean bankingAgent = false;
 
-	
 	@Enumerated
-	@Column(name="BUSINESSSERVICECATEGORY")
+	@Column(name = "BUSINESSSERVICECATEGORY")
 	private BusinessServiceCategory businessServiceCategory;
 
 	@ManyToOne
 	@JoinColumn(name = "Business_Service_Type")
 	private ServiceConfigMap businessServiceType;
-
 
 	@Column(name = "ISDEFAULTSERVICE")
 	private boolean isDefaultService = false;
@@ -68,16 +70,19 @@ public class BusinessServiceConfig implements  Serializable {
 	@JoinColumn(name = "SEGMENTATIONTYPE_ID")
 	private OfferedServiceType segmentationType;
 
-	@OneToMany(fetch=FetchType.EAGER,mappedBy="businessServiceConfig")
-//	@JoinColumn(name = "BUSINESS_SERVICE_CONFIG_ID", referencedColumnName = "Id")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "businessServiceConfig", cascade = CascadeType.ALL)
+	// @JoinColumn(name = "BUSINESS_SERVICE_CONFIG_ID", referencedColumnName = "Id")
 	@OrderBy(value = "stepOrder")
 	private Set<BusinessServiceStep> steps;
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "service_organization", joinColumns = @JoinColumn(name = "Business_Service_Config_Id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "Business_Entity_ID", referencedColumnName = "Business_Entity_ID"))
-//	private Set<BusinessEntity> walletList;
-//	@OneToOne
-//	@JoinColumn(name = "organization_id")
-//	private BusinessEntity walletOwner;
+	// @ManyToMany(fetch = FetchType.LAZY)
+	// @JoinTable(name = "service_organization", joinColumns = @JoinColumn(name =
+	// "Business_Service_Config_Id", referencedColumnName = "id"),
+	// inverseJoinColumns = @JoinColumn(name = "Business_Entity_ID",
+	// referencedColumnName = "Business_Entity_ID"))
+	// private Set<BusinessEntity> walletList;
+	// @OneToOne
+	// @JoinColumn(name = "organization_id")
+	// private BusinessEntity walletOwner;
 
 	public BusinessServiceCategory getBusinessServiceCategory() {
 		return businessServiceCategory;
@@ -103,8 +108,6 @@ public class BusinessServiceConfig implements  Serializable {
 	public Set<BusinessServiceStep> getSteps() {
 		return steps;
 	}
-
-	
 
 	public boolean isBankingAgent() {
 		return bankingAgent;
@@ -161,29 +164,28 @@ public class BusinessServiceConfig implements  Serializable {
 	public void setSteps(Set<BusinessServiceStep> steps) {
 		this.steps = steps;
 	}
-/*
-	public Set<BusinessEntity> getWalletList() {
-		return walletList;
-	}
 
-	public BusinessEntity getWalletOwner() {
-		return walletOwner;
-	}
-	
-	public void setWalletList(Set<BusinessEntity> walletList) {
-		this.walletList = walletList;
-	}
-
-	public void setWalletOwner(BusinessEntity walletOwner) {
-		this.walletOwner = walletOwner;
-	}
-*/
+	/*
+	 * public Set<BusinessEntity> getWalletList() { return walletList; }
+	 * 
+	 * public BusinessEntity getWalletOwner() { return walletOwner; }
+	 * 
+	 * public void setWalletList(Set<BusinessEntity> walletList) { this.walletList =
+	 * walletList; }
+	 * 
+	 * public void setWalletOwner(BusinessEntity walletOwner) { this.walletOwner =
+	 * walletOwner; }
+	 */
 	@Override
 	public String toString() {
-		return "BusinessServiceConfig [id=" + id + ", name=" + name + ", businessServiceType=" + businessServiceType
-				+ ", isDefaultService=" + isDefaultService + ", segmentationType=" + segmentationType
-				+ ", bankingAgent=" + bankingAgent + ", isExposable=" + isExposable + ", isMultiWallet=" + isMultiWallet
-				+ "]";
+
+		Long segmentID = (this.segmentationType != null && !this.segmentationType.equals(null))
+				? segmentationType.getId()
+				: null;
+
+		return "insert into Business_Service_Config (Id,Name,Business_Service_Type,ISDEFAULTSERVICE,segmentationType,banking_agent,is_exposable,is_multi_wallet) values("
+				+ id + ", " + name + ", " + businessServiceType.getId() + ", " + isDefaultService + "," + segmentID
+				+ ", " + bankingAgent + ", " + isExposable + ", " + isMultiWallet + ")";
 	}
 
 }

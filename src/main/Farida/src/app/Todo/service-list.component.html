@@ -19,9 +19,9 @@
         <div class="col">
           <select class="form-control custom-select mr-sm-2" id="serviceType" name="serviceType" [(ngModel)]="newService.serviceStackType">
             <option selected>Service Type</option>
-            <option value="0">EXTERNAL</option>
-            <option value="1">INTERNAL</option>
-            <option value="2">VALIDATION</option>
+            <option value="0" [ngValue]="0">EXTERNAL</option>
+            <option value="1" [ngValue]="1">INTERNAL</option>
+            <option value="2" [ngValue]="2">VALIDATION</option>
           </select>
         </div>
 
@@ -45,15 +45,31 @@
   </div>
 
 
+
   <ul class="todo-list">
     <li *ngFor="let service of services">
-      <div class="todo-row" *ngIf="!editing || editingTodo.id != service.id">
-        <a class="todo-completed" (click)="toggleCompleted(service)">
-          <i class="material-icons toggle-completed-checkbox"></i>
-        </a>
+      <div class="todo-row" *ngIf="!editing || editingService.id != service.id">
+        <span class="todo-title">
+          {{service.id}}
+        </span>
+
+        
         <span class="todo-title">
           {{service.name}}
         </span>
+
+        <span class="todo-title">
+          {{service.description}}
+        </span>
+
+        <span class="todo-title">
+          {{service.serviceStackType}}
+        </span>
+
+        <span class="todo-title">
+          {{service.serviceStackId}}
+        </span>
+
         <span class="todo-actions">
           <a (click)="editTodo(service)">
             <i class="material-icons edit">edit</i>
@@ -64,7 +80,23 @@
         </span>
       </div>
       <div class="todo-edit" *ngIf="editing && editingService.id === service.id">
+
+        <input class="form-control" type="text" [(ngModel)]="editingService.id" required>
+
         <input class="form-control" type="text" [(ngModel)]="editingService.name" required>
+
+        <input class="form-control" type="text" [(ngModel)]="editingService.description" required>
+
+        <select class="form-control custom-select mr-sm-2" id="serviceType" name="serviceType" [(ngModel)]="editingService.serviceStackType">
+          <option selected>Service Type</option>
+          <option value="EXTERNAL" [ngValue]="0">EXTERNAL</option>
+          <option value="INTERNAL" [ngValue]="1">INTERNAL</option>
+          <option value="VALIDATION" [ngValue]="2">VALIDATION</option>
+        </select>
+
+        <input class="form-control" type="text" [(ngModel)]="editingService.serviceStackId" required>
+
+
         <span class="edit-actions">
           <a (click)="updateTodo(editingService)">
             <i class="material-icons save">done</i>

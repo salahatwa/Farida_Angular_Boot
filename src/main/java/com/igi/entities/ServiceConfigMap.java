@@ -24,8 +24,8 @@ public class ServiceConfigMap implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "service_Type_ID", unique=true	,nullable = false)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "service_Type_ID", unique = true, nullable = false)
 	private Integer id;
 
 	@OneToOne
@@ -44,15 +44,13 @@ public class ServiceConfigMap implements Serializable {
 
 	public ServiceConfigMap() {
 	}
-	
-	/*public ServiceConfigMap(ServiceCategory category, boolean isGenericService, String name,
-			ServiceExecutionMode serviceMode) {
-		super();
-		this.category = category;
-		this.isGenericService = isGenericService;
-		this.name = name;
-		this.serviceMode = serviceMode;
-	}*/
+
+	/*
+	 * public ServiceConfigMap(ServiceCategory category, boolean isGenericService,
+	 * String name, ServiceExecutionMode serviceMode) { super(); this.category =
+	 * category; this.isGenericService = isGenericService; this.name = name;
+	 * this.serviceMode = serviceMode; }
+	 */
 
 	public ServiceCategory getCategory() {
 		return category;
@@ -61,7 +59,7 @@ public class ServiceConfigMap implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -86,8 +84,6 @@ public class ServiceConfigMap implements Serializable {
 		this.isGenericService = isGenericService;
 	}
 
-	
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -98,7 +94,10 @@ public class ServiceConfigMap implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ServiceConfigMap [id=" + id + ", name=" + name + ", isGenericService=" + isGenericService;
+	 Integer catId=( this.category != null && !this.category.equals(null) ) ? this.category.getId():null ;
+		return "insert into Service_Config_Map (service_Type_ID,category_id,Is_Generic_Service,service_Type_Name,service_mode) values("
+				+ this.id + ", " + catId + ", " + this.isGenericService + ", " + this.name + ", " + this.serviceMode.ordinal()
+								+ ")";
 	}
 
 }

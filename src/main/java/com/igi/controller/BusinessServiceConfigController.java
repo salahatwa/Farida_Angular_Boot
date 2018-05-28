@@ -33,16 +33,22 @@ public class BusinessServiceConfigController {
 			serviceConfigMap.setId(id);
 			conf = businessServiceConfigRepository.findByBusinessServiceType(serviceConfigMap);
 
+			if(conf!=null)
 			System.err.println("Conf:" + conf.toString() + ":"+conf.getSteps().size());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return conf;
 	}
+	
 
 	@PostMapping("/config")
-	public void createBusinessConfig(@RequestBody BusinessServiceConfig businessServiceConfig) {
-		businessServiceConfigRepository.save(businessServiceConfig);
+	public BusinessServiceConfig createBusinessConfig(@RequestBody BusinessServiceConfig businessServiceConfig) {
+		
+		System.err.println(businessServiceConfig.toString());
+		return businessServiceConfigRepository.save(businessServiceConfig);
 	}
-
+	
+	
+	
 }

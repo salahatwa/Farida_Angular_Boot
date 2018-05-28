@@ -15,7 +15,7 @@ export class BusinessServiceConfig {
     steps: Array<BusinessServiceStep>;
 
     businessServiceType: ServiceConfigMap;
-    segmentationType: OfferedServiceType;
+    segmentationType: OfferedServiceType ;
 
 
     setServiceConfigMap(serviceMap: ServiceConfigMap) {
